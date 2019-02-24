@@ -22,6 +22,7 @@ def callback(msg):
     y = msg.pose.pose.position.y
 
 def originCheck():
+    
     if x==0 & y==0:
         count *= -1
     else
