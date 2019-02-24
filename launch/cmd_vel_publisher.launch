@@ -1,0 +1,5 @@
+<launch>
+    <!-- send move info to robot using /cmd_vel -->
+    <node pkg="cmd_vel_publisher" type="infinity_node.py" name="kirk_inf"  output="screen">
+    </node>
+</launch>
