@@ -1,41 +1,51 @@
 #! /usr/bin/env python
 
 import rospy
+from time import sleep
 from geometry_msgs.msg import Twist 
-PI = 3.1415926535897
+from nav_msgs.msg import Odometry
 
-rospy.init_node('infinity_node')
-pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
-rate = rospy.Rate(2)
 vel = Twist()
-vel.linear.x = 0
+vel.linear.x = 1
 vel.linear.y = 0
 vel.linear.z = 0
 vel.angular.x = 0
 vel.angular.y = 0
 vel.angular.z = 0
+turn = False
+count = 0
+x = 0
+y = 0
 
-r = 2
-circ = 2*PI*r
-dist = 0
+def callback(msg):
+    x = msg.pose.pose.position.x
+    y = msg.pose.pose.position.y
+
+def originCheck():
+    if x == 0 & y==0:
+        count +=1
+        if count >2:
+            count = 0
+        
+            
+rospy.init_node('infinity_node')
+pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
+sub = rospy.Subscriber('/odom', Odometry, callback)
+rate = rospy.Rate(2)
+
 
 while not rospy.is_shutdown():
-    t0 = rospy.Time.now().to_sec()
-    while dist < circ:
-        pub.publish(vel)
-        t1 = rospy.Time.now().to_sec()
-        dist = vel.linear.x*(t1-t0)
-        vel.linear.x = 1
-        vel.angular.z = 0.5
+    if count ==0:
+        time.sleep(2)
         
-    while dist>circ:
-        pub.publish(vel)
-        t1 = rospy.Time.now().to_sec()
-        dist = vel.linear.x*(t1-t0)
-        vel.linear.x = 1
+    while count == 1 & rospy.is_shutdown() == False:
         vel.angular.z = -0.5
-    
-    if dist==2*circ:
-        dist = 0;
+        pub.publish(vel)
+        originCheck
+
+    while count == 2 & rospy.is_shutdown() == False:
+        vel.angular.z = 0.5
+        pub.publish(vel)
+        originCheck
   
     rate.sleep()
