@@ -21,21 +21,21 @@ dist = 0
 
 while not rospy.is_shutdown():
     t0 = rospy.TimeNow().to_sec()
-    while (dist < circ)
+    while dist < circ
         pub.publish(vel)
         t1 = rospy.Time.now().to_sec()
         dist = vel.linear.x*(t1-t0)
         vel.linear.x = 1
         vel.angular.z = 0.5
         
-    while (dist>circ)
+    while dist>circ
         pub.publish(vel)
         t1 = rospy.Time.now().to_sec()
         dist = vel.linear.x*(t1-t0)
         vel.linear.x = 1
         vel.angular.z = 0.5
     
-    if (dist==2*circ)
+    if dist==2*circ
         dist = 0;
   
   rate.sleep()
