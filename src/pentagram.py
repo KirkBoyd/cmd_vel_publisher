@@ -47,30 +47,24 @@ def callback(msg):
             count = 2
             print "count = 2"
 
-    if(count == 2):
+    if(count == 2):    # or count == 4 or count == 6 or count == 10
         vel.linear.x = 0.1
-        print "going to sleep"
         time.sleep(20)
         vel.linear.x = 0
-        count = 3
-        print "count = 3"
+        count += 1
 
     if(count == 3):     # turn 1
         if(ang < 234):
-            print ang
             vel.angular.z = 0.1
         else:
             vel.angular.z = 0
             count = 4
-            print "count = 4"
 
     if(count == 4):
         vel.linear.x = 0.1
-        print "going to sleep 2nd time"
         time.sleep(20)
         vel.linear.x = 0
         count = 5
-        print "count = 5"
 
     if(count == 5):     # turn 2
         if(ang > 232 and ang < 361):
@@ -82,53 +76,41 @@ def callback(msg):
         else:
             vel.angular.z = 0
             count = 6
-            print "count = 6"
 
     if (count == 6):
         vel.linear.x = 0.1
-        print "going to sleep 3rd time"
         time.sleep(20)
         vel.linear.x = 0
         count = 7
-        print "count = 7"
 
     if(count == 7):  # turn 3
         if(ang < 162):
-            print ang
             vel.angular.z = 0.1
         else:
             vel.angular.z = 0
             count = 8
-            print "count = 8"
 
     if (count == 8):
         vel.linear.x = 0.1
-        print "going to sleep 4th time"
         time.sleep(20)
         vel.linear.x = 0
         count = 9
-        print "count = 9"
 
     if(count == 9):  # turn 4
         if(ang < 306):
-            print ang
             vel.angular.z = 0.1
         else:
             vel.angular.z = 0
             count = 10
-            print "count = 10"
 
     if(count == 10):
         vel.linear.x = 0.1
-        print "going to sleep 5th time"
         time.sleep(20)
         vel.linear.x = 0
         count = 11
-        print "count = 11"
 
     if(count == 11):
         count = 1
-        print "count = 1"
 
 
 rospy.init_node('pentagram')
