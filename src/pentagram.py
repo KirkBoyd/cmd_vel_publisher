@@ -36,11 +36,12 @@ def callback(msg):
     ang = math.degrees(yaw)
     if ang < -1:
         ang = ang + 360
-    if(ang < 90):
-        print ang
-        count = 1
-        print "count = 1"
-        vel.angular.z = 0.1
+    if(ang <= 90):
+        if(count < 2):
+            print ang
+            count = 1
+            print "count = 1"
+            vel.angular.z = 0.1
         if(count == 1 and ang >= 89):
             vel.angular.z = 0
             count = 2
