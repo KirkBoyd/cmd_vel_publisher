@@ -55,7 +55,7 @@ def callback(msg):
         print "count = 3"
 
     if(count == 3):
-        if(ang > 90 and ang < 198):
+        if(ang <= 198):
             print ang
             vel.angular.z = 0.1
         else:
@@ -72,7 +72,7 @@ def callback(msg):
         print "count = 5"
 
     if(count == 5):
-        if(ang < 306):
+        if(ang <= 306):
             print ang
             vel.angular.z = 0.1
         else:
