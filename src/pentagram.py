@@ -82,7 +82,24 @@ def callback(msg):
             print "count = 6"
 
     if (count == 6):
-        print "it worked"
+        vel.linear.x = 0.1
+        print "going to sleep 3rd time"
+        time.sleep(20)
+        vel.linear.x = 0
+        count = 7
+        print "count = 7"
+
+    if(count == 7):
+        if(ang >= 306):
+            print ang
+            vel.angular.z = 0.1
+        elif(ang <= 54):
+            print ang
+            vel.angular.z = 0.1
+        else:
+            vel.angular.z = 0
+            count = 6
+            print "count = 6"
 
 
 rospy.init_node('pentagram')
