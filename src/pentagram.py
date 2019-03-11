@@ -114,7 +114,7 @@ def callback(msg):
             print ang
             vel.angular.z = 0.1
         else:
-            vel.angular.x = 0
+            vel.angular.z = 0
             count = 10
             print "count = 10"
 
