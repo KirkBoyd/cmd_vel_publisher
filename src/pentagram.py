@@ -2,6 +2,7 @@
 
 import rospy
 import math
+import time
 from geometry_msgs.msg import Twist
 from nav_msgs.msg import Odometry
 from tf.transformations import euler_from_quaternion
@@ -18,73 +19,69 @@ global turn1, turn2, turn3, turn4, turn5
 # turn3 = False
 # turn4 = False
 # turn5 = False
-turn = False
-deltaL = 0.1
-deltaS = 0.01
+count = 0
+delta = 2
 
 
 def callback(msg):
-    global roll, pitch, yaw, turn1
+    global roll, pitch, yaw, ang, pos, count, turn
+
     orientation_q = msg.pose.pose.orientation
     orientation_list = [orientation_q.x, orientation_q.y,
                         orientation_q.z, orientation_q.w]
     (roll, pitch, yaw) = euler_from_quaternion(orientation_list)
     x = msg.pose.pose.position.x
     y = msg.pose.pose.position.y
-    if not turn1:
-        turnTo(90)
-    if turn1:
-        goTo(x, y, 5)
+    pos = math.sqrt(x*x + y*y)
+    ang = math.degrees(yaw)
+    if ang < -1:
+        ang = ang + 360
+    if(ang < 89):
+        print ang
+        count = 1
+        print "count = 1"
+        vel.angular.z = 0.1
+        if(count == 1 and ang > 89 and ang < 92):
+            vel.angular.z = 0
+            count = 2
+            print "count = 2"
 
-    def turnTo(a):
-        ang = math.degrees(yaw)
-        if (ang < a-6):
-            ang = math.degrees(yaw)
-            vel.angular.z = 0.5
-            turn1 = False
-        elif (ang < a-deltaL):
-            ang = math.degrees(yaw)
-            vel.angular.z = 0.01
-            turn1 = False
-        elif (ang < a-deltaS):
-            ang = math.degrees(yaw)
-            vel.angular.z = 0.001
-            turn1 = False
-        elif (ang > a+deltaL):
-            ang = math.degrees(yaw)
-            vel.angular.z = -0.01
-            turn1 = False
-        elif (ang > a+deltaS):
-            ang = math.degrees(yaw)
-            vel.angular.z = -0.001
-            turn1 = False
+    if(count == 2):
+        vel.linear.x = 0.1
+        print "going to sleep"
+        time.sleep(20)
+        vel.linear.x = 0
+        count = 3
+        print "count = 3"
+
+    if(count == 3):
+        if(ang > 90 and ang < 198):
+            print ang
+            vel.angular.z = 0.1
         else:
             vel.angular.z = 0
-            turn1 = True
+            count = 4
+            print "count = 4"
 
-    def goTo(a, b, l):
-        dist = math.sqrt(a*a + b*b)
-        if (dist < l-1):
-            dist = math.sqrt(a*a + b*b)
-            vel.linear.x = 1
-            print dist
-        elif (dist < l-deltaL):
-            dist = math.sqrt(a*a + b*b)
-            vel.linear.x = 0.1
-        elif (dist < l-deltaS):
-            dist = math.sqrt(a*a + b*b)
-            vel.linear.x = 0.01
-            print dist
-        elif (dist > l+deltaL):
-            dist = math.sqrt(a*a + b*b)
-            vel.linear.x = -0.1
-        elif (dist > l+deltaS):
-            dist = math.sqrt(a*a + b*b)
-            vel.linear.x = -0.01
-            print dist
+    if(count == 4):
+        vel.linear.x = 0.1
+        print "going to sleep 2nd time"
+        time.sleep(20)
+        vel.linear.x = 0
+        count = 5
+        print "count = 5"
+
+    if(count == 5):
+        if(ang < 306):
+            print ang
+            vel.angular.z = 0.1
         else:
-            vel.linear.x = 0
-            print "done"
+            vel.angular.z = 0
+            count = 6
+            print "count = 6"
+
+    if (count == 6):
+        print "it worked"
 
 
 rospy.init_node('pentagram')
