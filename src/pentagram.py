@@ -41,7 +41,7 @@ def callback(msg):
         count = 1
         print "count = 1"
         vel.angular.z = 0.1
-        if(count == 1 and ang > 89 and ang < 92):
+        if(count == 1 and ang > 89):
             vel.angular.z = 0
             count = 2
             print "count = 2"
